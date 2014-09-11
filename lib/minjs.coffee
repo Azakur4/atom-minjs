@@ -2,7 +2,7 @@ minjs = require 'uglify-js'
 fs = require 'fs'
 
 compile = () ->
-  editor = atom.workspace.geteditor()
+  editor = atom.workspace.getEditor()
 
   if editor
     path = editor.getPath()
