@@ -2,17 +2,17 @@ minjs = require 'uglify-js'
 fs = require 'fs'
 
 compile = () ->
-  editors = atom.workspace.getEditors()
-  for e in editors
-    path = e.getPath()
-    if path.indexOf('.js') == path.length - 3 and path.indexOf('.min.js') < 0
-      result = minjs.minify(editor.getText(), {fromString: true});
-      new_name = path.replace('.js', '.min.js')
+	editor = atom.workspace.getActiveEditor()
+	path = editor.getPath()
+	
+	if path.indexOf('.js') == path.length - 3 and path.indexOf('.min.js') < 0
+	result = minjs.minify(editor.getText(), {fromString: true});
+	new_name = path.replace('.js', '.min.js')
 
-      fs.writeFile(new_name, result.code, (err) ->
-          if err
-            console.log("Couldn't minify js file!")
-      )
+	fs.writeFile(new_name, result.code, (err) ->
+		 if err
+			console.log("Couldn't minify js file!")
+	)
 
 module.exports =
   activate: (state) =>
