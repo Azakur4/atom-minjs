@@ -1,0 +1,18 @@
+{
+  "name": "atom-minjs",
+  "main": "./lib/minjs.coffee",
+  "version": "0.1.0",
+  "description": "Minifies any JS file on Ctrl-S/Cmd-S and stores the minified file as as [filename].min.js",
+  "activationEvents": [
+    "minjs:compile",
+    "core:save"
+  ],
+  "repository": "https://github.com/mananshah99/atom-minjs",
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.40.0"
+  },
+  "dependencies": {
+    "uglify-js": "^2.4.0"
+  }
+}
