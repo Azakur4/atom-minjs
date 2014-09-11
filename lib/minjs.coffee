@@ -2,11 +2,9 @@ minjs = require 'uglify-js'
 fs = require 'fs'
 
 compile = () ->
-  editor = atom.workspace.getEditor()
-
-  if editor
-    path = editor.getPath()
-
+  editors = atom.workspace.getEditors()
+  for e in editors
+    path = e.getPath()
     if path.indexOf('.js') == path.length - 3 and path.indexOf('.min.js') < 0
       result = minjs.minify(editor.getText(), {fromString: true});
       new_name = path.replace('.js', '.min.js')
