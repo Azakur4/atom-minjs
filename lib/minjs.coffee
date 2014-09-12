@@ -2,7 +2,7 @@ minjs = require 'uglify-js'
 fs = require 'fs'
 
 module.exports =
-	compile = () ->
+	compile: ->
 		editor = atom.workspace.getActiveEditor()
 		path = editor.getPath()
 
@@ -21,11 +21,12 @@ module.exports =
 				else
 					@status "Minification succeeded!"
 			)
+		return
 	activate: ->
-		atom.workspaceView.command "minjs:minify", => compile()
+		atom.workspaceView.command "minjs:minify", => @compile()
 		atom.workspaceView.command "core:save", =>
 		if atom.config.get('minjs.minifyOnSave')
-			compile()
+			@compile()
 		return
 	statusTimeout: null
 	status: (text) ->
