@@ -23,7 +23,7 @@ module.exports =
 			)
 		return
 	activate: ->
-		atom.workspaceView.command "minjs:minify", => @compile()
+		atom.workspaceView.command "minjs:compile", => @compile()
 		atom.workspaceView.command "core:save", =>
 		if atom.config.get('minjs.minifyOnSave')
 			@compile()
