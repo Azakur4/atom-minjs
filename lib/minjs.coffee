@@ -22,24 +22,26 @@ module.exports =
 					@status "Minification succeeded!"
 			)
 
-	  activate: ->
-				atom.workspaceView.command "minjs:minify", => compile()
-				atom.workspaceView.command "core:save", =>
-					if atom.config.get('minjs.minifyOnSave')
-						compile()
-				return
+	activate: ->
+		atom.workspaceView.command "minjs:minify", => compile()
+		atom.workspaceView.command "core:save", =>
+		if atom.config.get('minjs.minifyOnSave')
+			compile()
+		return
 
-		statusTimeout: null
+	statusTimeout: null
 
-		status: (text) ->
-			clearTimeout @statusTimeout
-			if atom.workspaceView.statusBar.find('.minjs-status').length
-				atom.workspaceView.statusBar.find('.minjs-status').text text
-			else
-				atom.workspaceView.statusBar.appendRight('<span class="minjs-status inline-block">' + text + '</span>')
-			@statusTimeout = setTimeout ->
-					atom.workspaceView.statusBar.find('.minjs-status').remove()
-				, 3000
+	status: (text) ->
+		clearTimeout @statusTimeout
 
-		configDefaults:
-			minifyOnSave: false
+		if atom.workspaceView.statusBar.find('.minjs-status').length
+			atom.workspaceView.statusBar.find('.minjs-status').text text
+		else
+			atom.workspaceView.statusBar.appendRight('<span class="minjs-status inline-block">' + text + '</span>')
+
+		@statusTimeout = setTimeout ->
+				atom.workspaceView.statusBar.find('.minjs-status').remove()
+			, 3000
+
+	configDefaults:
+		minifyOnSave: false
