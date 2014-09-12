@@ -10,16 +10,16 @@ module.exports =
 			@status "File not minifiable."
 			return
 
-		@status "Working..."
+		status "Working..."
 
 		if path.indexOf('.js') == path.length - 3 and path.indexOf('.min.js') < 0
 			result = minjs.minify(editor.getText(), {fromString: true});
 			new_name = path.replace('.js', '.min.js')
 			fs.writeFile(new_name, result.code, (err) ->
 				if err
-					@status "Couldn't minify .js file!"
+					status "Couldn't minify .js file!"
 				else
-					@status "Minification succeeded!"
+					status "Minification succeeded!"
 			)
 		return
 	activate: ->
@@ -28,18 +28,19 @@ module.exports =
 		if atom.config.get('minjs.minifyOnSave')
 			@compile()
 		return
-	statusTimeout: null
-	status: (text) ->
-		clearTimeout @statusTimeout
-
-		if atom.workspaceView.statusBar.find('.minjs-status').length
-			atom.workspaceView.statusBar.find('.minjs-status').text text
-		else
-			atom.workspaceView.statusBar.appendRight('<span class="minjs-status inline-block">' + text + '</span>')
-
-		@statusTimeout = setTimeout ->
-				atom.workspaceView.statusBar.find('.minjs-status').remove()
-			, 3000
 
 	configDefaults:
 		minifyOnSave: false
+
+statusTimeout = null
+status = (text) ->
+	clearTimeout statusTimeout
+
+	if atom.workspaceView.statusBar.find('.minjs-status').length
+		atom.workspaceView.statusBar.find('.minjs-status').text text
+	else
+		atom.workspaceView.statusBar.appendRight('<span class="minjs-status inline-block">' + text + '</span>')
+
+	statusTimeout = setTimeout ->
+			atom.workspaceView.statusBar.find('.minjs-status').remove()
+		, 3000
