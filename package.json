@@ -1,7 +1,7 @@
 {
   "name": "atom-minjs",
   "main": "./lib/minjs.coffee",
-  "version": "0.2.10",
+  "version": "0.2.11",
   "description": "Minifies any JS file on Ctrl-S/Cmd-S and stores the minified file as as [filename].min.js",
   "activationEvents": [
     "minjs:compile",
