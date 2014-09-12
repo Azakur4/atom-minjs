@@ -21,16 +21,13 @@ module.exports =
 				else
 					@status "Minification succeeded!"
 			)
-
 	activate: ->
 		atom.workspaceView.command "minjs:minify", => compile()
 		atom.workspaceView.command "core:save", =>
 		if atom.config.get('minjs.minifyOnSave')
 			compile()
 		return
-
 	statusTimeout: null
-
 	status: (text) ->
 		clearTimeout @statusTimeout
 
