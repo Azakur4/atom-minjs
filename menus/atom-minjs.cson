@@ -1,0 +1,15 @@
+'context-menu':
+  '.overlayer':
+      'Minify': 'minjs:compile'
+
+'menu': [
+  {
+    'label': 'Packages'
+    'submenu': [
+      'label': 'Atom MinJS'
+      'submenu': [
+        { 'label': 'Minify', 'command': 'minjs:compile' }
+      ]
+    ]
+  }
+]

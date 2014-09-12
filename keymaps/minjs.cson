@@ -1,2 +1,3 @@
 '.workspace':
   'ctrl-alt-m': 'minjs:compile'
+  'cmd-alt-m': 'minjs:compile'

@@ -6,18 +6,40 @@ compile = () ->
 	path = editor.getPath()
 
 	if !path or path.match(/\.min\.(js|css)$/gi) or !path.match(/\.(js|css)$/gi)
-		console.log("File not minifiable.");
+		@status "File not minifiable."
 		return
+
+	@status "Working..."
 
 	if path.indexOf('.js') == path.length - 3 and path.indexOf('.min.js') < 0
 		result = minjs.minify(editor.getText(), {fromString: true});
 		new_name = path.replace('.js', '.min.js')
 		fs.writeFile(new_name, result.code, (err) ->
 			if err
-				console.log("Couldn't minify js file!")
+				@status "Couldn't minify .js file!"
+			else
+				@status "Minification succeeded!"
 		)
 
 module.exports =
-  activate: (state) =>
-    atom.workspaceView.command "core:save", => compile()
-    atom.workspaceView.command "minjs:compile", => compile()
+  activate: ->
+			atom.workspaceView.command "minjs:minify", => compile()
+			atom.workspaceView.command "core:save", =>
+				if atom.config.get('minjs.minifyOnSave')
+					compile()
+			return
+
+	statusTimeout: null
+
+	status: (text) ->
+		clearTimeout @statusTimeout
+		if atom.workspaceView.statusBar.find('.minjs-status').length
+			atom.workspaceView.statusBar.find('.minjs-status').text text
+		else
+			atom.workspaceView.statusBar.appendRight('<span class="minjs-status inline-block">' + text + '</span>')
+		@statusTimeout = setTimeout ->
+				atom.workspaceView.statusBar.find('.minjs-status').remove()
+			, 3000
+
+	configDefaults:
+		minifyOnSave: false
